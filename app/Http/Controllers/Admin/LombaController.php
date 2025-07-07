@@ -44,8 +44,14 @@ class LombaController extends Controller
     $data['categories'] = json_encode($data['categories']);
 
     if ($request->hasFile('thumbnail')) {
-        $data['thumbnail'] = $request->file('thumbnail')->store('blog_thumbnails', 'public');
-    }
+    $image = $request->file('thumbnail');
+    $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+    // Simpan ke folder storage/thumbnail di root Laravel
+    $image->move(base_path('storage/thumbnail'), $imageName);
+
+    $data['thumbnail'] = $imageName;
+}
     
 
     $lomba = Lomba::create($data);
@@ -88,11 +94,23 @@ class LombaController extends Controller
     $data['categories'] = json_encode($data['categories']);
 
     if ($request->hasFile('thumbnail')) {
-        if ($lomba->thumbnail) {
-            Storage::disk('public')->delete($lomba->thumbnail);
+    if ($lomba->thumbnail) {
+        // Hapus file lama dari folder root
+        $oldPath = base_path('storage/thumbnail/' . $lomba->thumbnail);
+        if (file_exists($oldPath)) {
+            unlink($oldPath);
         }
-        $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
     }
+
+    $image = $request->file('thumbnail');
+    $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+    // Simpan ke folder root Laravel
+    $image->move(base_path('storage/thumbnail'), $imageName);
+
+    $data['thumbnail'] = $imageName;
+}
+
 
     $lomba->update($data);
 
