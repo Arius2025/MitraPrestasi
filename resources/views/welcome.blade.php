@@ -126,7 +126,7 @@
                 <div class="col-md-4 mb-4" data-aos="zoom-in">
                     <div class="card h-100 border-0 shadow-sm card-hover">
                         @if($lomba->thumbnail)
-                            <img src="{{ asset('storage/' . $lomba->thumbnail) }}" class="card-img-top" alt="{{ $lomba->title }}" style="height: 180px; object-fit: cover;">
+                            <img src="{{ url('thumbnail/' . $lomba->thumbnail) }}" class="card-img-top" alt="{{ $lomba->title }}" style="height: 180px; object-fit: cover;">
                         @endif
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-award-fill text-warning"></i> {{ $lomba->title }}</h5>

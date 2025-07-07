@@ -95,7 +95,7 @@ return [
     |--------------------------------------------------------------------------
     | Preloader Animation
     |--------------------------------------------------------------------------
-    |
+    |git branch -M main
     | Here you can change the preloader animation configuration. Currently, two
     | modes are supported: 'fullscreen' for a fullscreen preloader animation
     | and 'cwrapper' to attach the preloader animation into the content-wrapper

@@ -8,6 +8,7 @@ use App\Http\Controllers\LombaController;
 use App\Http\Controllers\BlogPublicController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\LombaController as AdminLombaController;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Middleware\IsAdmin;
 
 /*
@@ -85,6 +86,17 @@ Route::middleware(['auth'])->prefix('admin/settings')->group(function () {
     Route::get('password', [ProfileController::class, 'edit'])->name('profile.password.edit'); // bisa pakai view yang sama
     Route::post('password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
+
+Route::get('/thumbnail/{filename}', function ($filename) {
+    $path = storage_path('app/thumbnail/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+});
+
 
 /**
  * 🔐 Auth Routes (Bawaan Laravel Breeze atau Jetstream)
